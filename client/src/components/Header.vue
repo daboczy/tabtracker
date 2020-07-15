@@ -18,10 +18,22 @@
             <!-- <router-link to="register">
                 <v-btn flat dark>Sign Up</v-btn>
             </router-link> -->
-            <v-btn flat dark v-on:click="navigateTo({name: 'login'})">Login</v-btn>
+            <v-btn 
+                v-if="!$store.state.isUserLoggedIn"
+                flat 
+                dark 
+                v-on:click="navigateTo({name: 'login'})">
+                Login
+            </v-btn>
         </v-toolbar-items>
         <v-toolbar-items>
-            <v-btn flat dark v-on:click="navigateTo({name: 'register'})">Sign Up</v-btn>
+            <v-btn
+                v-if="!$store.state.isUserLoggedIn" 
+                flat 
+                dark 
+                v-on:click="navigateTo({name: 'register'})">
+                Sign Up
+            </v-btn>
         </v-toolbar-items>
     </v-toolbar>
 </template>
