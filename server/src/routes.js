@@ -25,7 +25,13 @@ module.exports = (app) => {
         SongController.createSong
     ); 
 
+    app.get('/songs/:songId',
+        SongController.show
+    );     
 
+    app.put('/songs/:songId',
+        SongController.put
+    );     
 
 
 }

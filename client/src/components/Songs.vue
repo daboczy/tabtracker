@@ -15,7 +15,7 @@
                      middle 
                      fab>
                 <v-icon>add</v-icon>
-            </v-btn>
+              </v-btn>
 
                 <!-- <h3>To the Panet slot</h3>
                 <p>Hi there in the slot</p> -->
