@@ -11,7 +11,7 @@
 
 
 <script>
-import Panel from '@/components/Panel'
+//import Panel from '@/components/Panel'
 
 export default {
     //name: 'Lyrics',
@@ -20,9 +20,9 @@ export default {
         'song'
     ],
 
-    components: {
-        Panel
-    }
+    // components: {
+    //     Panel
+    // }
     
 }
 </script>

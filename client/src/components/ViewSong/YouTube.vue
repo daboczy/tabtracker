@@ -8,7 +8,7 @@
 
 
 <script>
-import Panel from '@/components/Panel'
+//import Panel from '@/components/Panel'
 
 export default {
    // name: 'Youtube',
@@ -17,9 +17,9 @@ export default {
         'youtubeId'
     ],
 
-    components: {
-        Panel
-    }
+    // components: {
+    //     Panel
+    // }
     
 }
 </script>

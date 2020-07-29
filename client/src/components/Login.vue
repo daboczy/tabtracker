@@ -8,7 +8,7 @@
               <br>
               <v-text-field label="Password" type="password" v-model="password"></v-text-field>
               <br>
-              <div class="error" v-html="error"></div>
+              <div class="danger-alert" v-html="error"></div>
               <br>
               <v-btn class="cyan" v-on:click="login()">Login</v-btn>
           </panel>
@@ -21,14 +21,14 @@
 
 <script>
 import AuthenticationService from '@/services/AuthenticationService';
-import Panel from '@/components/Panel'
+//import Panel from '@/components/Panel'
 
 export default {
   name: 'Login',
 
-  components: {
-    Panel
-  },  
+  // components: {
+  //   Panel
+  // },  
 
   data () {
     return {
@@ -49,6 +49,9 @@ export default {
         });
         this.$store.dispatch('setToken', response.data.token)    //call the vuex store obj. setToken action
         this.$store.dispatch('setUser', response.data.user)    //call the vuex store obj. setToken action
+        this.$router.push({
+          name: 'songs'
+        })          
       } catch (error) {
         this.error = error.response.data.error
       }
@@ -74,7 +77,7 @@ export default {
 
 
 <style scoped>
-.error {
+/* .error {
   color: blue;
-}
+} */
 </style>

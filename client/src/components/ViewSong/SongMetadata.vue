@@ -17,7 +17,16 @@
                     <v-btn
                         dark
                         class="cyan"
-                        v-on:click="navigateTo({name: 'song-edit', params: {songId: song.id}})">
+                        :to="{
+                            name: 'song-edit', 
+                            params(){           //dynamically change the params object song.id, anywway same as the below
+                                return {
+                                    songId: song.id
+                                }
+                            }
+                        }">
+                        <!-- :to="{name: 'song-edit', params: {songId: song.id}}"> -->
+                        <!-- v-on:click="navigateTo({name: 'song-edit', params: {songId: song.id}})"> -->
                         Edit
                     </v-btn> 
                 </v-flex>
@@ -35,7 +44,7 @@
 
 
 <script>
-import Panel from '@/components/Panel'
+//import Panel from '@/components/Panel'
 
 export default {
     //name: 'SongMetadata',
@@ -44,9 +53,9 @@ export default {
         'song'
     ],
 
-    components: {
-        Panel
-    },
+    // components: {
+    //     Panel
+    // },
 
     methods: {
         navigateTo(route){

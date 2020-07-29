@@ -11,10 +11,14 @@ import store from '@/store/store'
 
 import VueYouTubeEmbed from 'vue-youtube-embed'
 
+import Panel from '@/components/globals/Panel'    //because we use it in a lot of component so make it global (with Vue.component see below)
+
 Vue.config.productionTip = false
 
 Vue.use(Vuetify)
 Vue.use(VueYouTubeEmbed)
+
+Vue.component('panel', Panel)
 
 sync(store, router)
 

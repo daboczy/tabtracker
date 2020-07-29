@@ -83,14 +83,14 @@
 
 
 <script>
-import Panel from '@/components/Panel'
+//import Panel from '@/components/Panel'
 import SongService from '@/services/SongService'
 
 
 export default {
-    components:{
-        Panel
-    },
+    // components:{
+    //     Panel
+    // },
 
     data() {
         return {
