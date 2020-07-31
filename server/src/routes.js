@@ -3,6 +3,7 @@ const AuthenticationControllerPolicy = require('./policies/AuthenticationControl
 
 const SongController = require('./controllers/SongController')
 const BookmarkController = require('./controllers/BookmarkController')
+const HistoryController = require('./controllers/HistoryController')
 
 
 
@@ -35,6 +36,7 @@ module.exports = (app) => {
     );     
 
 
+
     app.get('/bookmarks',
         BookmarkController.getAllBookmarks
     ); 
@@ -48,4 +50,12 @@ module.exports = (app) => {
     ); 
 
 
+
+    app.get('/histories',
+        HistoryController.getAllHistory
+    ); 
+
+    app.post('/histories',
+        HistoryController.post
+    ); 
 }

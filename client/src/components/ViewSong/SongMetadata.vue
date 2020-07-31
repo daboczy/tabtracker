@@ -63,13 +63,14 @@ export default {
 	
   data () {
     return {
-      bookmark: false
+      bookmark: null
     }
 	},
 	
   computed: {
     ...mapState([
-      	'isUserLoggedIn'
+        'isUserLoggedIn',
+        'user'
     ])
 	},
 	
@@ -81,9 +82,12 @@ export default {
       try {
         const query = {
           songId: this.song.id,
-          userId: this.$store.state.user.id
+          userId: this.user.id        //this.$store.state.user.id
         }
-        this.bookmark = (await BookmarkService.getAllBookmarks(query)).data
+        const bookmarks = (await BookmarkService.getAllBookmarks(query)).data
+        if (bookmarks.length){
+          this.bookmark = bookmarks[0]
+        }
       } catch (err) {
         console.log(err)
       }
