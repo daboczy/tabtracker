@@ -2,10 +2,18 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+//this component and plugin help to store the state of the vuex => for eg if the page is refreshed all of the data will remain (login) 
+import createPersistedState from "vuex-persistedstate";
+
+ 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
     strict: true,
+
+    plugins: [
+        createPersistedState()
+    ], 
 
     state: {
         token: null,

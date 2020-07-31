@@ -1,71 +1,119 @@
 <template>
-    <div>
-        <panel title="Song Metadata">
-            <v-layout>
-                <!-- left side -->
-                <v-flex xs6>
-                    <div class="song-title">
-                        {{song.title}}
-                    </div>
-                    <div class="song-artist">
-                        {{song.artist}}
-                    </div>
-                    <div class="song-genre">
-                        {{song.genre}}
-                    </div>
+  <panel title="Song Metadata">
+    <v-layout>
+      <v-flex xs6>
+        <div class="song-title">
+          {{song.title}}
+        </div>
+        <div class="song-artist">
+          {{song.artist}}
+        </div>
+        <div class="song-genre">
+          {{song.genre}}
+        </div>
 
-                    <v-btn
-                        dark
-                        class="cyan"
-                        :to="{
-                            name: 'song-edit', 
-                            params(){           //dynamically change the params object song.id, anywway same as the below
-                                return {
-                                    songId: song.id
-                                }
-                            }
-                        }">
-                        <!-- :to="{name: 'song-edit', params: {songId: song.id}}"> -->
-                        <!-- v-on:click="navigateTo({name: 'song-edit', params: {songId: song.id}})"> -->
-                        Edit
-                    </v-btn> 
-                </v-flex>
+        <v-btn
+          dark
+          class="cyan"
+          :to="{
+            name: 'song-edit', 
+            params () {
+              return {
+                songId: song.id
+              }
+            }
+          }">
+          Edit
+        </v-btn>
 
-                <!-- right side -->
-                <v-flex xs6>
-                    <img class="album-image" v-bind:src="song.albumImageUrl" />
-                    <br>
-                    {{song.album}}
-                </v-flex>
-            </v-layout>
-        </panel>        
-    </div>
+        <v-btn
+          v-if="isUserLoggedIn && !bookmark"
+          dark
+          class="cyan"
+          @click="setAsBookmark">
+          Set As Bookmark
+        </v-btn>
+
+        <v-btn
+          v-if="isUserLoggedIn && bookmark"
+          dark
+          class="cyan"
+          @click="unsetAsBookmark">
+          Unset Bookmark
+        </v-btn>
+      </v-flex>
+
+      <v-flex xs6>
+        <img class="album-image" :src="song.albumImageUrl" />
+        <br>
+        {{song.album}}
+      </v-flex>
+    </v-layout>
+  </panel>
 </template>
 
-
 <script>
-//import Panel from '@/components/Panel'
+import {mapState} from 'vuex'
+import BookmarkService from '@/services/BookmarkService'
 
 export default {
-    //name: 'SongMetadata',
-
-    props: [
-        'song'
-    ],
-
-    // components: {
-    //     Panel
-    // },
-
-    methods: {
-        navigateTo(route){
-            this.$router.push(route)
+  props: [
+    'song'
+	],
+	
+  data () {
+    return {
+      bookmark: false
+    }
+	},
+	
+  computed: {
+    ...mapState([
+      	'isUserLoggedIn'
+    ])
+	},
+	
+  watch: {
+    async song (value) {
+      if (!this.isUserLoggedIn) {
+        return
+      }
+      try {
+        const query = {
+          songId: this.song.id,
+          userId: this.$store.state.user.id
         }
-    },
-    
+        this.bookmark = (await BookmarkService.getAllBookmarks(query)).data
+      } catch (err) {
+        console.log(err)
+      }
+    }
+	},
+	
+  methods: {
+    async setAsBookmark () {
+      try {
+        const bookmark = {
+          songId: this.song.id,
+          userId: this.$store.state.user.id
+        }
+        this.bookmark = (await BookmarkService.post(bookmark)).data
+      } catch (err) {
+        console.log(err)
+      }
+		},
+		
+    async unsetAsBookmark () {
+      try {
+        await BookmarkService.delete(this.bookmark.id)
+        this.bookmark = null
+      } catch (err) {
+        console.log(err)
+      }
+    }
+  }
 }
 </script>
-
 
 <style scoped>
 .song {
@@ -73,21 +121,17 @@ export default {
   height: 330px;
   overflow: hidden;
 }
-
-.album-image {
-  width: 50%;
-  margin: 0 auto;
-}  
-
 .song-title {
   font-size: 30px;
 }
-
 .song-artist {
   font-size: 24px;
-} 
-
-.album-genre {
+}
+.song-genre {
   font-size: 18px;
+}
+.album-image {
+  width: 70%;
+  margin: 0 auto;
 }
 </style>
