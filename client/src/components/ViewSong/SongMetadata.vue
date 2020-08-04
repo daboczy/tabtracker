@@ -82,7 +82,7 @@ export default {
       try {
         const query = {
           songId: this.song.id,
-          userId: this.user.id        //this.$store.state.user.id
+          //userId: this.user.id        //isAuthenticated
         }
         const bookmarks = (await BookmarkService.getAllBookmarks(query)).data
         if (bookmarks.length){
@@ -99,7 +99,7 @@ export default {
       try {
         const bookmark = {
           songId: this.song.id,
-          userId: this.$store.state.user.id
+          //userId: this.$store.state.user.id     //isAuthenticated
         }
         this.bookmark = (await BookmarkService.post(bookmark)).data
       } catch (err) {

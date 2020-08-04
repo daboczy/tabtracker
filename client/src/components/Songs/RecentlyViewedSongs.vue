@@ -54,7 +54,7 @@ export default {
     async mounted() {
         if (this.isUserLoggedIn){
             this.histories = (await SongHistoryService.getAllHistory({
-                userId: this.user.id
+                //userId: this.user.id        //isAuthenticated,
             })).data
         }
     },
